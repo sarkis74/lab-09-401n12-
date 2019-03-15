@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose",
-    "test-watch": "jest --watchAll --verbose"
+    "test-watch": "jest --watchAll --verbose",
+    "dbOn": "mkdir -p ./db && mongod --dbpath ./db",
+    "dbOff": "killall mongod"
   },
   "jest": {
     "testEnvironment": "node"
