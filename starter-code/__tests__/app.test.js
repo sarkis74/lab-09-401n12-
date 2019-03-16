@@ -62,4 +62,13 @@ describe('api server', () => {
 
     });
 
+    it('following a delete to a valid id, should delete entire entry', () => {
+
+        return mockRequest
+            .delete('/api/v1/players/12')
+            .then(results => {
+                expect(results.status).toBe(200);
+            });
+    })
+
 });
