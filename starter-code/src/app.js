@@ -13,9 +13,9 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 // Esoteric Resources
-const errorHandler = require( `${cwd}/src/middleware/500.js`);
-const notFound = require( `${cwd}/src/middleware/404.js` );
-const v1Router = require( `${cwd}/src/api/v1.js` );
+const errorHandler = require( `${cwd}/middleware/500.js`);
+const notFound = require( `${cwd}/middleware/404.js` );
+const v1Router = require( `${cwd}/api/v1.js` );
 
 // Prepare the express app
 const app = express();
@@ -27,7 +27,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-// Routes
+// // Routes
 app.use(v1Router);
 
 // Catchalls
