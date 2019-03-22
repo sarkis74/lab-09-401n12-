@@ -9,8 +9,9 @@
 const cwd = process.cwd();
 
 const express = require('express');
+const server = express();
 
-const modelFinder = require(`${cwd}/middleware/model-finder.js`);
+const modelFinder = require('../middleware/model-finder');
 
 const router = express.Router();
 
@@ -25,6 +26,9 @@ router.post('/api/v1/:model', handlePost);
 router.get('/api/v1/:model/:id', handleGetOne);
 router.put('/api/v1/:model/:id', handlePut);
 router.delete('/api/v1/:model/:id', handleDelete);
+
+//Swagger Route
+server.use('/api/v1/doc', express.static(`${cwd}/docs/config/dist`));
 
 // Route Handlers
 
@@ -100,3 +104,4 @@ function handleDelete(request,response,next) {
 }
 
 module.exports = router;
+module.exports = server;

@@ -1,7 +1,8 @@
 'use strict';
 
 const rootDir = process.cwd()// Similar to __dirname
-const players = require(`${rootDir}/src/models/players/players-model.js`);
+const players = require('../models/players.test')
+console.log(`Current directory: ${process.cwd()}`);
 
 const supergoose = require('../supergoose.js');
 

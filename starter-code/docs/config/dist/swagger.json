@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "title": "Swagger Sports App"
   },
-  "host": "8080",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -13,7 +13,7 @@
       "description": "Everything about your sports",
       "externalDocs": {
         "description": "Find out more",
-        "url": "http://localhost:8080"
+        "url": "http://localhost:3000"
       }
     }
   ],
