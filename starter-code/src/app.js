@@ -12,10 +12,11 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
+
 // Esoteric Resources
-const errorHandler = require( `${cwd}/middleware/500.js`);
-const notFound = require( `${cwd}/middleware/404.js` );
-const v1Router = require( `${cwd}/api/v1.js` );
+const errorHandler = require('../src/middleware/500' );
+const notFound = require( '../src/middleware/404' );
+const v1Router = require('../src/api/v1');
 
 // Prepare the express app
 const app = express();
