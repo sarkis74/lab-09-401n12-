@@ -9,26 +9,28 @@
 const cwd = process.cwd();
 
 const express = require('express');
-const server = express();
 
-const modelFinder = require('../middleware/model-finder');
+const modelFinder = require(`${cwd}/src/middleware/model-finder.js`);
+
+const swaggerUi = require('swagger-ui-express');
+const swag = require('../../docs/config/dist/swagger');
 
 const router = express.Router();
+
+router.use('/docs', express.static(`${cwd}/public/docs`));
+router.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swag));
 
 // Evaluate the model, dynamically
 router.param('model', modelFinder);
 
-
-// API Routes
+/** API Routes */
+router.get('/', (req, res) => res.send('CF401 Lab 09'));
 router.get('/api/v1/:model', handleGetAll);
 router.post('/api/v1/:model', handlePost);
 
 router.get('/api/v1/:model/:id', handleGetOne);
 router.put('/api/v1/:model/:id', handlePut);
 router.delete('/api/v1/:model/:id', handleDelete);
-
-//Swagger Route
-server.use('/api/v1/doc', express.static(`${cwd}/docs/config/dist`));
 
 // Route Handlers
 
@@ -104,4 +106,3 @@ function handleDelete(request,response,next) {
 }
 
 module.exports = router;
-module.exports = server;

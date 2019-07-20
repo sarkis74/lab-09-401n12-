@@ -1,188 +1,406 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "description": "This is a sample server for Lab 09 Code Fellows. This is an application relating to sports. It includes methods for generating teams, categories and players",
-    "version": "1.0.0",
-    "title": "Swagger Sports App"
-  },
-  "host": "localhost:3000",
-  "basePath": "/",
-  "tags": [
-    {
-      "name": "sports",
-      "description": "Everything about your sports",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://localhost:3000"
-      }
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Mock API Documentation\nCode Fellows 401 Lab 09 assignment.\n",
+    "version" : "1.0.0",
+    "title" : "09-API-Server",
+    "termsOfService" : "http://swagger.io/terms/",
+    "contact" : {
+      "email" : "serjarmen@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
-  ],
-  "schemes": [
-    "https",
-    "http"
-  ],
-  "paths": {
-    "/api/v1/:model": {
-      "get": {
-        "summary": "Get client IP",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "format",
-            "type": "string",
-            "description": "The format to return the response in, i.e. json.",
-            "default": "json"
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/sarkis74/09-api-server/1.0.0",
+  "tags" : [ {
+    "name" : "players",
+    "description" : "Players on team"
+  }, {
+    "name" : "teams",
+    "description" : "Teams"
+  }, {
+    "name" : "categories",
+    "description" : "Categories"
+  } ],
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/api/v1/players/" : {
+      "post" : {
+        "tags" : [ "players" ],
+        "summary" : "Add a new player",
+        "operationId" : "handlePost",
+        "consumes" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Post content to include name, ID",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/players"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success response",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "ip": {
-                  "type": "string",
-                  "example": "88.68.10.107"
-                }
-              }
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/v1/players/:id" : {
+      "get" : {
+        "tags" : [ "players" ],
+        "summary" : "Returns player by ID.",
+        "description" : "Returns player by ID",
+        "operationId" : "handleGetOne",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "path",
+          "description" : "ID of player that needs to be retrieved",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/players"
             }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Player not found"
           }
         }
       },
-      "post": {
-        "summary": "Add a new category, team, player to the store",
-        "description": "",
-        "operationId": "addModel",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Sport object that needs to be added to the store",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Sport"
-            }
+      "put" : {
+        "tags" : [ "players" ],
+        "summary" : "Update a player's info by ID",
+        "description" : "Updates a single player's info.",
+        "operationId" : "handlePut",
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "path",
+          "description" : "ID of player that needs to be updated",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Player not found"
           }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
+        }
+      },
+      "delete" : {
+        "tags" : [ "players" ],
+        "summary" : "Deletes a post by ID.",
+        "operationId" : "handleDelete",
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "path",
+          "description" : "ID of the player that needs to be deleted",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "ID not found"
           }
-        },
-        "security": [
-          {
-            "modelstore_auth": [
-              "write:models",
-              "read:models"
-            ]
-          }
-        ]
+        }
       }
     },
-      "/api/v1/:model/:id": {
-        "get": {
-          "summary": "Get client IP",
-          "parameters": [
-            {
-              "in": "query",
-              "name": "format",
-              "type": "string",
-              "description": "The format to return the response in, i.e. json.",
-              "default": "json"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Success response",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "ip": {
-                    "type": "string",
-                    "example": "88.68.10.107"
-                  }
-                }
-              }
-            }
+    "/api/v1/teams/" : {
+      "post" : {
+        "tags" : [ "teams" ],
+        "summary" : "Add a new tram",
+        "operationId" : "handlePost",
+        "consumes" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Post content to include name, ID",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/teams"
           }
-        },
-        "put": {
-          "summary": "Update an existing category, team, player to the store",
-          "description": "",
-          "operationId": "updateModel",
-          "consumes": [
-            "application/json",
-            "application/xml"
-          ],
-          "produces": [
-            "application/xml",
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Model object that needs to be added to db",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/Model"
-              }
-            }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid ID supplied"
-            },
-            "404": {
-              "description": "Model not found"
-            },
-            "405": {
-              "description": "Validation exception"
-            }
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
           }
-        },
-
-        "delete": {
-          "summary": "Delete purchase order by ID",
-          "description": "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors",
-          "operationId": "deleteOrder",
-          "produces": [
-            "application/xml",
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "orderId",
-              "in": "path",
-              "description": "ID of the order that needs to be deleted",
-              "required": true,
-              "type": "integer",
-              "minimum": 1,
-              "format": "int64"
+        }
+      }
+    },
+    "/api/v1/teams/:id" : {
+      "get" : {
+        "tags" : [ "teams" ],
+        "summary" : "Returns team by ID.",
+        "description" : "Returns team by ID",
+        "operationId" : "handleGetOne",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "path",
+          "description" : "ID of team that needs to be retrieved",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/teams"
             }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid ID supplied"
-            },
-            "404": {
-              "description": "Order not found"
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Team not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "teams" ],
+        "summary" : "Update a team's info by ID",
+        "description" : "Updates a single team's info.",
+        "operationId" : "handlePut",
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "path",
+          "description" : "ID of team that needs to be updated",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Team not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "teams" ],
+        "summary" : "Deletes a team by ID.",
+        "operationId" : "handleDelete",
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "path",
+          "description" : "ID of the team that needs to be deleted",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "ID not found"
+          }
+        }
+      }
+    },
+    "/api/v1/categories/" : {
+      "post" : {
+        "tags" : [ "categories" ],
+        "summary" : "Add a new team",
+        "operationId" : "handlePost",
+        "consumes" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Post content to include name, ID",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/categories"
+          }
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/v1/categories/:id" : {
+      "get" : {
+        "tags" : [ "categories" ],
+        "summary" : "Returns team by ID.",
+        "description" : "Returns team by ID",
+        "operationId" : "handleGetOne",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "path",
+          "description" : "ID of team that needs to be retrieved",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/categories"
             }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Category not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "categories" ],
+        "summary" : "Update a category's info by ID",
+        "description" : "Updates a single category's info.",
+        "operationId" : "handlePut",
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "path",
+          "description" : "ID of category that needs to be updated",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/categories"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Category not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "categories" ],
+        "summary" : "Deletes a category by ID.",
+        "operationId" : "handleDelete",
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "path",
+          "description" : "ID of the category that needs to be deleted",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "ID not found"
           }
         }
       }
     }
+  },
+  "definitions" : {
+    "players" : {
+      "type" : "object",
+      "required" : [ "_id", "name" ],
+      "properties" : {
+        "_id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Russell Wilson"
+        }
+      },
+      "xml" : {
+        "name" : "players"
+      }
+    },
+    "teams" : {
+      "type" : "object",
+      "required" : [ "_id", "name" ],
+      "properties" : {
+        "_id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "SeaHawks"
+        }
+      },
+      "xml" : {
+        "name" : "teams"
+      }
+    },
+    "categories" : {
+      "type" : "object",
+      "required" : [ "_id", "name" ],
+      "properties" : {
+        "_id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Football (category)"
+        }
+      },
+      "xml" : {
+        "name" : "categories"
+      }
+    }
+  },
+  "externalDocs" : {
+    "description" : "Heroku",
+    "url" : "http://sarkis74-09-api-server.herokuapp.com"
   }
-
-
-
-
-
+}
