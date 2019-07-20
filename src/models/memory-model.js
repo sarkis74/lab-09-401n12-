@@ -27,6 +27,7 @@ class Model {
             }
         });
 
+
         return valid ? record : undefined;
     }
 
@@ -48,13 +49,15 @@ class Model {
 
     delete(id) {
         this.database = this.database.filter((record) => record._id !== id );
-        return this.get(id);
+        return Promise.resolve();
     }
 
     put(id, entry) {
+        entry._id = id;
         let record = this.sanitize(entry);
-        if( record._id ) { this.database = this.database.map((item) => (item._id === id) ? record : item  ); }
-        return this.get(id);
+
+        if (record._id) { this.database = this.database.map(item => item.id === id ? record : item); }
+        return Promise.resolve(record);
     }
 
 }

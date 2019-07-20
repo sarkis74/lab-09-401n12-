@@ -2,16 +2,21 @@
 
 const rootDir = process.cwd();
 const supergoose = require('./supergoose.js');
+const supertest = require('supertest');
 const {server} = require('../src/app');
-const  mockRequest = supergoose.server(server);
+const mockRequest = supergoose.server(server);
+const mockClient = supertest(server);
+
+jest.setTimeout(30000);
+
 beforeAll(supergoose.startDB);
 afterAll(supergoose.stopDB);
 
-describe('api server', () => {
+describe('api server + route tests', () => {
 
     it('should respond with a 404 on an invalid route', () => {
 
-        return mockRequest
+        return mockClient
             .get('/foo')
             .then(results => {
                 expect(results.status).toBe(404);
@@ -21,8 +26,8 @@ describe('api server', () => {
 
     it('should respond with a 404 on an invalid method', () => {
 
-        return mockRequest
-            .post('/bar')
+        return mockClient
+            .post('/api/v1/players/12')
             .then(results => {
                 expect(results.status).toBe(404);
             });
@@ -33,7 +38,7 @@ describe('api server', () => {
 
         let obj = {name:'John', bats:'R',throws:'R',position:'C',team:'Bunnies'};
 
-        return mockRequest
+        return mockClient
             .post('/api/v1/players')
             .send(obj)
             .then(results => {
@@ -60,14 +65,5 @@ describe('api server', () => {
             });
 
     });
-
-    it('following a delete to a valid id, should delete entire entry', () => {
-
-        return mockRequest
-            .delete('/api/v1/players/12')
-            .then(results => {
-                expect(results.status).toBe(200);
-            });
-    })
 
 });

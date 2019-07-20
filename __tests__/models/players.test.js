@@ -1,10 +1,11 @@
 'use strict';
 
-const rootDir = process.cwd()// Similar to __dirname
-const players = require('../models/players.test')
-console.log(`Current directory: ${process.cwd()}`);
+const rootDir = process.cwd();
+const players = require(`${rootDir}/src/models/players/players-model.js`);
 
 const supergoose = require('../supergoose.js');
+
+jest.setTimeout(30000);
 
 beforeAll(supergoose.startDB);
 afterAll(supergoose.stopDB);
@@ -31,6 +32,29 @@ describe('Players Model', () => {
                         });
                     });
             });
+    });
+
+    it('can update a player', () => {
+        let test = {name:'John', bats:'R',throws:'R',position:'C',team:'Bunnies'};
+        let newTest = {name:'TEST', bats:'R',throws:'R',position:'C',team:'TEST'};
+        return players.post(test)
+            .then(record => {
+                return players.put(record._id, newTest)
+                    .then(updated => {
+                        expect(updated.name).toEqual(newTest.name);
+                    })
+            })
+    });
+
+    it('can delete a player', () => {
+        let test = {name:'John', bats:'R',throws:'R',position:'C',team:'Bunnies'};
+        return players.post(test)
+            .then(record => {
+                return players.delete(record._id)
+                    .then(deleted => {
+                        expect(deleted.name).toEqual(test.name);
+                    })
+            })
     });
 
 });
