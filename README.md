@@ -1,6 +1,8 @@
 ![CF](https://i.imgur.com/60omTQF.png) 
 =================================================  
-LAB 09  [![Build Status](https://travis-ci.org/sarkis74/lab-09-401n12-.svg?branch=master)](https://travis-ci.org/sarkis74/lab-09-401n12-)  
+LAB 09  
+
+[![Build Status](https://travis-ci.org/sarkis74/lab-09-401n12-.svg?branch=master)](https://travis-ci.org/sarkis74/lab-09-401n12-)  
 
 
 ## API Server Documentation 
