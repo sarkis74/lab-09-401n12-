@@ -1,6 +1,6 @@
 ![CF](https://i.imgur.com/60omTQF.png) 
 =================================================  
-##LAB 09
+LAB 09
 
 ## API Server Documentation [![Build Status](https://travis-ci.org/sarkis74/lab-09-401n12-.svg?branch=master)](https://travis-ci.org/sarkis74/lab-09-401n12-)
 
@@ -36,6 +36,5 @@
 * Should have status of 404 on unknown route
 * Should have status of 500 on a server error
 
-![github](https://github.com/sarkis74/lab-09-401n12-/tree/master/starter-code)
 
 ![diagram](https://i.imgur.com/X7uaywP.png)
